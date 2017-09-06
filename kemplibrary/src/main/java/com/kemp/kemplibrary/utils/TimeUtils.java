@@ -12,12 +12,20 @@ import java.util.Locale;
 
 public final class TimeUtils {
 
-    public String getCurrentTime() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-        return df.format(new Date());
+    public static String getCurrentTime() {
+        return formatDate(new Date());
     }
 
-    public int getWeeks() {
+    public static String formatDate(String pattern, Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.CHINA);
+        return simpleDateFormat.format(date);
+    }
+
+    public static String formatDate(Date date) {
+        return formatDate("yyyy-MM-dd", date);
+    }
+
+    public static int getWeeks() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.WEEK_OF_YEAR);
     }
