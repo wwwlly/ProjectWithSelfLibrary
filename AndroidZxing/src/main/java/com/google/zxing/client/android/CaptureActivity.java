@@ -16,21 +16,27 @@
 
 package com.google.zxing.client.android;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -75,6 +81,7 @@ import java.util.Map;
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
+    private static final int REQUEST_PERMISSION_CAMERA = 0;
 
     private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 1500L;
     private static final long BULK_MODE_SCAN_DELAY_MS = 1000L;
@@ -245,7 +252,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         if (hasSurface) {
             // The activity was paused but not stopped, so the surface still exists. Therefore
             // surfaceCreated() won't be called, so init the camera here.
-            initCamera(surfaceHolder);
+            initCameraCompat(surfaceHolder);
         } else {
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceHolder.addCallback(this);
@@ -396,7 +403,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
         if (!hasSurface) {
             hasSurface = true;
-            initCamera(holder);
+            initCameraCompat(holder);
         }
     }
 
@@ -682,6 +689,17 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
     }
 
+    //兼容6.0
+    private void initCameraCompat(SurfaceHolder surfaceHolder) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_DENIED){
+            String permisions[] = {Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this, permisions, REQUEST_PERMISSION_CAMERA);
+        }else{
+            initCamera(surfaceHolder);
+        }
+    }
+
     private void initCamera(SurfaceHolder surfaceHolder) {
         if (surfaceHolder == null) {
             throw new IllegalStateException("No SurfaceHolder provided");
@@ -705,6 +723,19 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             // java.?lang.?RuntimeException: Fail to connect to camera service
             Log.w(TAG, "Unexpected error initializing camera", e);
             displayFrameworkBugMessageAndExit();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_CAMERA:
+                SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+                SurfaceHolder surfaceHolder = surfaceView.getHolder();
+                initCamera(surfaceHolder);
+                break;
+            default:
+                break;
         }
     }
 
