@@ -162,6 +162,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        //横竖屏切换 1.manifest 2.这里 3.修改com.google.zxing.client.android.camera.CameraConfigurationUtils的findBestPreviewSizeValue（306行）
         if (prefs.getBoolean(PreferencesUtility.KEY_DISABLE_AUTO_ORIENTATION, true)) {
             setRequestedOrientation(getCurrentOrientation());
         } else {

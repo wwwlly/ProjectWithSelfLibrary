@@ -303,9 +303,14 @@ public final class CameraConfigurationUtils {
         continue;
       }
 
+      //默认是横屏
       boolean isCandidatePortrait = realWidth < realHeight;
+      //横屏
       int maybeFlippedWidth = isCandidatePortrait ? realHeight : realWidth;
       int maybeFlippedHeight = isCandidatePortrait ? realWidth : realHeight;
+      //竖屏
+//      int maybeFlippedWidth = isCandidatePortrait ? realWidth : realHeight;
+//      int maybeFlippedHeight = isCandidatePortrait ? realHeight : realWidth;
       double aspectRatio = maybeFlippedWidth / (double) maybeFlippedHeight;
       double distortion = Math.abs(aspectRatio - screenAspectRatio);
       if (distortion > MAX_ASPECT_DISTORTION) {
