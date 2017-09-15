@@ -33,10 +33,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.google.zxing.Result;
 import com.google.zxing.client.android.camera.CameraManager;
@@ -61,7 +59,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
-    private TextView statusView;
     private boolean hasSurface;
     private InactivityTimer inactivityTimer;
     private BeepManager beepManager;
@@ -105,8 +102,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
-
-        statusView = (TextView) findViewById(R.id.status_view);
 
         handler = null;
 
@@ -287,9 +282,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         resetStatusView();
     }
 
-    private void resetStatusView() {
-        statusView.setText(R.string.msg_default_status);
-        statusView.setVisibility(View.VISIBLE);
-        viewfinderView.setVisibility(View.VISIBLE);
+    public void resetStatusView() {
     }
 }
