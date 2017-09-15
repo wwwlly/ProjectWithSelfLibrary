@@ -281,8 +281,4 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         statusView.setVisibility(View.VISIBLE);
         viewfinderView.setVisibility(View.VISIBLE);
     }
-
-    public void drawViewfinder() {
-        viewfinderView.drawViewfinder();
-    }
 }
