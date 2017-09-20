@@ -55,10 +55,10 @@ public class ViewfinderView extends View implements ViewFinderViewDrawCallback {
         maskColor = resources.getColor(R.color.viewfinder_mask);
         laserColor = resources.getColor(R.color.viewfinder_laser);
         scannerAlpha = 0;
-        initRes();
+        initRes(resources);
     }
 
-    public void initRes() {
+    public void initRes(Resources resources) {
 
     }
 

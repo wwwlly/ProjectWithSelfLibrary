@@ -21,5 +21,12 @@ public class ScanCodeActivity extends CaptureActivity {
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         ViewfinderView viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         setMainView(surfaceView, viewfinderView);
+
+        setOrientationPortrait(true);
+    }
+
+    @Override
+    public void handleDecode(String result) {
+        super.handleDecode(result);
     }
 }

@@ -40,7 +40,6 @@ public abstract class CaptureActivity extends Activity implements CaptureUnitCal
     public void onCreate(Bundle savedInstanceState) {
         captureUnit.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-//        setOrientationPortrait(true);
     }
 
     @Override
