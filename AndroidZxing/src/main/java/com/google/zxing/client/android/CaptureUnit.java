@@ -216,10 +216,10 @@ public class CaptureUnit implements SurfaceHolder.Callback, ActivityFragmentLife
             ParsedResult parsedResult = ResultParser.parseResult(rawResult);
             String result = parsedResult.getDisplayResult();
             Log.d(TAG, "result:" + result);
-            if (captureUnitCallback != null) captureUnitCallback.handleDecode(result);
+            if (captureUnitCallback != null) captureUnitCallback.handleDecodeText(result);
 
         } else {
-            if (captureUnitCallback != null) captureUnitCallback.handleDecode(null);
+            if (captureUnitCallback != null) captureUnitCallback.handleDecodeText(null);
         }
     }
 

@@ -79,7 +79,7 @@ public abstract class CaptureActivity extends Activity implements CaptureUnitCal
     }
 
     @Override
-    public void handleDecode(String result) {
+    public void handleDecodeText(String result) {
         finish();
     }
 

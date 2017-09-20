@@ -6,6 +6,7 @@ import android.view.SurfaceView;
 import com.google.zxing.client.android.CaptureActivity;
 import com.google.zxing.client.android.ViewfinderView;
 import com.kemp.projectwithselflibrary.R;
+import com.kemp.projectwithselflibrary.utils.Logger;
 
 /**
  * Created by wangkp on 2017/9/18.
@@ -26,7 +27,8 @@ public class ScanCodeActivity extends CaptureActivity {
     }
 
     @Override
-    public void handleDecode(String result) {
-        super.handleDecode(result);
+    public void handleDecodeText(String result) {
+        Logger.d("==========" + result);
+        finish();
     }
 }

@@ -6,7 +6,7 @@ package com.google.zxing.client.android;
 
 public interface CaptureUnitCallback {
 
-    void handleDecode(String result);
+    void handleDecodeText(String result);
 
     void resetStatusView();
 }
