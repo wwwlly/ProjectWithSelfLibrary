@@ -23,12 +23,8 @@ import android.view.KeyEvent;
 import android.view.SurfaceView;
 
 /**
- * This activity opens the camera and does the actual scanning on a background thread. It draws a
- * viewfinder to help the user place the barcode correctly, shows feedback as the image processing
- * is happening, and then overlays the results when a scan is successful.
- *
- * @author dswitkin@google.com (Daniel Switkin)
- * @author Sean Owen
+ * 子类必须调用setMainView这个方法来设置surfaceView和viewfinderView
+ * 调用setOrientationPortrait来设置横屏还是竖屏
  */
 public abstract class CaptureActivity extends Activity implements CaptureUnitCallback {
 

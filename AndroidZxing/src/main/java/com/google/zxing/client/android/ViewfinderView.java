@@ -28,10 +28,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
- * transparency outside it, as well as the laser scanner animation and result points.
- *
- * @author dswitkin@google.com (Daniel Switkin)
+ * onDrawBackground 用于画surfaceView上的背景阴影一般不需要重载
+ * onDrawLaser 用于画扫描线
+ * onDrawForeground 用于画前景比如相框
  */
 public class ViewfinderView extends View implements ViewFinderViewDrawCallback {
 
@@ -95,7 +94,7 @@ public class ViewfinderView extends View implements ViewFinderViewDrawCallback {
     }
 
     @Override
-    public void onDrawBackground(Canvas canvas, Rect frame, Paint paint) {
+    public final void onDrawBackground(Canvas canvas, Rect frame, Paint paint) {
         paint.setColor(maskColor);
         int width = canvas.getWidth();
         int height = canvas.getHeight();

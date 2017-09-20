@@ -48,11 +48,6 @@ public class MViewFinder extends ViewfinderView {
     }
 
     @Override
-    public void onDrawBackground(Canvas canvas, Rect frame, Paint paint) {
-        super.onDrawBackground(canvas, frame, paint);
-    }
-
-    @Override
     public void onDrawLaser(Canvas canvas, Rect frame, Paint paint) {
         int frameMidX = (frame.left + frame.right) / 2;
         int frameMidY = (frame.top + frame.bottom) / 2;
