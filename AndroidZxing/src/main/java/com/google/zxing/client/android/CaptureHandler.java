@@ -16,39 +16,26 @@
 
 package com.google.zxing.client.android;
 
-import android.content.ActivityNotFoundException;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.BitmapFactory;
-import android.provider.Browser;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.camera.CameraManager;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * This class handles all the messaging which comprises the state machine for capture.
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-public final class CaptureActivityHandler extends Handler {
+public final class CaptureHandler extends Handler {
 
-    private static final String TAG = CaptureActivityHandler.class.getSimpleName();
+    private static final String TAG = CaptureHandler.class.getSimpleName();
 
-    private final CaptureActivity activity;
+    private final CaptureUnit captureUnit;
     private final DecodeThread decodeThread;
     private State state;
     private final CameraManager cameraManager;
@@ -59,9 +46,9 @@ public final class CaptureActivityHandler extends Handler {
         DONE
     }
 
-    CaptureActivityHandler(CaptureActivity activity, CameraManager cameraManager) {
-        this.activity = activity;
-        decodeThread = new DecodeThread(activity);
+    CaptureHandler(CaptureUnit captureUnit, CameraManager cameraManager) {
+        this.captureUnit = captureUnit;
+        decodeThread = new DecodeThread(captureUnit);
         decodeThread.start();
         state = State.SUCCESS;
 
@@ -91,44 +78,12 @@ public final class CaptureActivityHandler extends Handler {
                     }
                     scaleFactor = bundle.getFloat(DecodeThread.BARCODE_SCALED_FACTOR);
                 }
-                activity.handleDecode((Result) message.obj, barcode, scaleFactor);
+                captureUnit.handleDecode((Result) message.obj, barcode, scaleFactor);
                 break;
             case ConstantIds.DECODE_FAILED:
                 // We're decoding as fast as possible, so when one decode fails, start another.
                 state = State.PREVIEW;
                 cameraManager.requestPreviewFrame(decodeThread.getHandler(), ConstantIds.DECODE);
-                break;
-            case ConstantIds.RETURN_SCAN_RESULT:
-                activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
-                activity.finish();
-                break;
-            case ConstantIds.LAUNCH_PRODUCT_QUERY:
-                String url = (String) message.obj;
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                intent.setData(Uri.parse(url));
-
-                ResolveInfo resolveInfo =
-                        activity.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-                String browserPackageName = null;
-                if (resolveInfo != null && resolveInfo.activityInfo != null) {
-                    browserPackageName = resolveInfo.activityInfo.packageName;
-                    Log.d(TAG, "Using browser in package " + browserPackageName);
-                }
-
-                // Needed for default Android browser / Chrome only apparently
-                if ("com.android.browser".equals(browserPackageName) || "com.android.chrome".equals(browserPackageName)) {
-                    intent.setPackage(browserPackageName);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(Browser.EXTRA_APPLICATION_ID, browserPackageName);
-                }
-
-                try {
-                    activity.startActivity(intent);
-                } catch (ActivityNotFoundException ignored) {
-                    Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
-                }
                 break;
         }
     }

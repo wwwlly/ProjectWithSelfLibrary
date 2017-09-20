@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.google.zxing.client.android.CaptureActivity;
 import com.kemp.kemplibrary.utils.ToolUtils;
 import com.kemp.projectwithselflibrary.activity.IamgeActivity;
+import com.kemp.projectwithselflibrary.activity.ScanCodeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this, CaptureActivity.class));
+                        startActivity(new Intent(MainActivity.this, ScanCodeActivity.class));
                         break;
                     case 1:
                         startActivity(new Intent(MainActivity.this, IamgeActivity.class));

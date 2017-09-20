@@ -38,14 +38,14 @@ final class DecodeHandler extends Handler {
 
   private static final String TAG = DecodeHandler.class.getSimpleName();
 
-  private final CaptureActivity activity;
+  private final CaptureUnit captureUnit;
   private final MultiFormatReader multiFormatReader;
   private boolean running = true;
 
-  DecodeHandler(CaptureActivity activity, Map<DecodeHintType,Object> hints) {
+  DecodeHandler(CaptureUnit captureUnit, Map<DecodeHintType,Object> hints) {
     multiFormatReader = new MultiFormatReader();
     multiFormatReader.setHints(hints);
-    this.activity = activity;
+    this.captureUnit = captureUnit;
   }
 
   @Override
@@ -75,7 +75,7 @@ final class DecodeHandler extends Handler {
   private void decode(byte[] data, int width, int height) {
     long start = System.currentTimeMillis();
     Result rawResult = null;
-    PlanarYUVLuminanceSource source = activity.getCameraManager().buildLuminanceSource(data, width, height);
+    PlanarYUVLuminanceSource source = captureUnit.getCameraManager().buildLuminanceSource(data, width, height);
     if (source != null) {
       BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
       try {
@@ -87,7 +87,7 @@ final class DecodeHandler extends Handler {
       }
     }
 
-    Handler handler = activity.getHandler();
+    Handler handler = captureUnit.getHandler();
     if (rawResult != null) {
       // Don't log the barcode contents for security.
       long end = System.currentTimeMillis();

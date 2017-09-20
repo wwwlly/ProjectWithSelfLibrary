@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.IamgeActivity"></activity>
+        <activity
+            android:name=".activity.ScanCodeActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
