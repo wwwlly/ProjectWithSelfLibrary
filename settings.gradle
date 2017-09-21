@@ -1,1 +1,1 @@
-include ':app', ':kemplibrary', ':ZxingCore', ':AndroidZxing'
+include ':app', ':kemplibrary'

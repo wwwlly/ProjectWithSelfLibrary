@@ -10,10 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.zxing.client.android.CaptureActivity;
 import com.kemp.kemplibrary.utils.ToolUtils;
 import com.kemp.projectwithselflibrary.activity.IamgeActivity;
-import com.kemp.projectwithselflibrary.activity.ScanCodeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +38,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this, ScanCodeActivity.class));
+                        startActivity(new Intent(MainActivity.this, IamgeActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this, IamgeActivity.class));
                         break;
                 }
             }
@@ -59,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ItemBean> initItemList() {
         List<ItemBean> list = new ArrayList<>();
-        list.add(new ItemBean("扫描二维码（横屏）", CaptureActivity.class));
         list.add(new ItemBean("图片", IamgeActivity.class));
         return list;
     }
