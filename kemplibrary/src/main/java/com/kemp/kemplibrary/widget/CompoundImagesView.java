@@ -113,25 +113,20 @@ public class CompoundImagesView extends ViewGroup {
     }
 
     private void addChildViews(int count) {
-        switch (count) {
-            case 1:
-                addView(createImageView1());
-                break;
-            case 2:
-                addView(createImageView2());
-                addView(createImageView2());
-                break;
-            case 3:
-                addView(createImageView2());
-                addView(createImageView4());
-                addView(createImageView4());
-                break;
-            case 4:
-                addView(createImageView4());
-                addView(createImageView4());
-                addView(createImageView4());
-                addView(createImageView4());
-                break;
+        int tw = 1, th = 1;
+        for (int i = 0; i < count; i++) {
+            if (count == 2 || count == 3 || count == 4) {
+                tw = 2;
+            }
+            if (count == 3 && i != 0 || count == 4) {
+                th = 2;
+            }
+            ImageView imageView = createImageView();
+            int w = width - getPaddingLeft() - getPaddingRight();
+            int h = height - getPaddingTop() - getPaddingBottom();
+            LayoutParams lp = new LayoutParams(w/tw, h/th);
+            imageView.setLayoutParams(lp);
+            addView(imageView);
         }
     }
 
