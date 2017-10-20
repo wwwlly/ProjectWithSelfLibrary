@@ -124,42 +124,18 @@ public class CompoundImagesView extends ViewGroup {
             ImageView imageView = createImageView();
             int w = width - getPaddingLeft() - getPaddingRight();
             int h = height - getPaddingTop() - getPaddingBottom();
-            LayoutParams lp = new LayoutParams(w/tw, h/th);
+            LayoutParams lp = new LayoutParams(computeChildSize(w, tw), computeChildSize(h, th));
             imageView.setLayoutParams(lp);
             addView(imageView);
         }
     }
 
+    private int computeChildSize(int size, int divisor) {
+        return (size - (divisor - 1) * space) / divisor;
+    }
+
     private ImageView createImageView() {
         return new ImageView(mContext);
     }
-
-    private ImageView createImageView1() {
-        ImageView imageView = createImageView();
-        int w = width - getPaddingLeft() - getPaddingRight();
-        int h = height - getPaddingTop() - getPaddingBottom();
-        LayoutParams lp = new LayoutParams(w, h);
-        imageView.setLayoutParams(lp);
-        return imageView;
-    }
-
-    private ImageView createImageView2() {
-        ImageView imageView = createImageView();
-        int w = width - getPaddingLeft() - getPaddingRight() - space;
-        int h = height - getPaddingTop() - getPaddingBottom();
-        LayoutParams lp = new LayoutParams(w / 2, h);
-        imageView.setLayoutParams(lp);
-        return imageView;
-    }
-
-    private ImageView createImageView4() {
-        ImageView imageView = createImageView();
-        int w = width - getPaddingLeft() - getPaddingRight() - space;
-        int h = height - getPaddingTop() - getPaddingBottom() - space;
-        LayoutParams lp = new LayoutParams(w / 2, h / 2);
-        imageView.setLayoutParams(lp);
-        return imageView;
-    }
-
 
 }
