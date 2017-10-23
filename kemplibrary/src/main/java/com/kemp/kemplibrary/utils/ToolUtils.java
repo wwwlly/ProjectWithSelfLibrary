@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import java.security.MessageDigest;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -82,5 +83,9 @@ public class ToolUtils {
             hexValue.append(Integer.toHexString(val));
         }
         return hexValue.toString().toUpperCase();
+    }
+
+    public static boolean isEmpty(List<?> list) {
+        return null == list || list.size() == 0;
     }
 }

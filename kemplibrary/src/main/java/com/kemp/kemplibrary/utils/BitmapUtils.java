@@ -6,6 +6,8 @@ import android.os.Build;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by wangkp on 2017/5/26.
@@ -43,5 +45,39 @@ public class BitmapUtils {
         }
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
         return BitmapFactory.decodeStream(isBm, null, null);
+    }
+
+    public static void compressAndGenImage(Bitmap image, String outPath, int maxSize) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        // scale
+        int options = 100;
+        // Store the bitmap into output stream(no compress)
+        image.compress(Bitmap.CompressFormat.JPEG, options, os);
+        // Compress by loop
+        while ( os.toByteArray().length / 1024 > maxSize) {
+            // Clean up os
+            os.reset();
+            // interval 10
+            options -= 10;
+            image.compress(Bitmap.CompressFormat.JPEG, options, os);
+        }
+
+        // Generate compressed image file
+        FileOutputStream fos = new FileOutputStream(outPath);
+        fos.write(os.toByteArray());
+        fos.flush();
+        fos.close();
+    }
+
+    public static Bitmap createBitmap(String filePath) {
+        // Get bitmap through image path
+        BitmapFactory.Options newOpts = new BitmapFactory.Options();
+        newOpts.inJustDecodeBounds = false;
+        newOpts.inPurgeable = true;
+        newOpts.inInputShareable = true;
+        // Do not compress
+        newOpts.inSampleSize = 1;
+        newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
+        return BitmapFactory.decodeFile(filePath, newOpts);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.kemp.kemplibrary.utils.ToolUtils;
+import com.kemp.projectwithselflibrary.activity.AddImgActivity;
 import com.kemp.projectwithselflibrary.activity.IamgeActivity;
 
 import java.util.ArrayList;
@@ -18,8 +19,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> mData = new ArrayList<>();
-    private List<ItemBean> listData;
+    private List<ItemBean> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,42 +31,41 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
         ListView listView = (ListView) findViewById(R.id.list_view);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mData);
+        ArrayAdapter<ItemBean> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mData);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        startActivity(new Intent(MainActivity.this, IamgeActivity.class));
-                        break;
-                    case 1:
-                        break;
-                }
+                ItemBean itemBean = (ItemBean) parent.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, itemBean.aClass);
+                startActivity(intent);
             }
         });
     }
 
     private void initData() {
-        listData = initItemList();
-        for (ItemBean itemBean : listData) {
-            mData.add(itemBean.title);
-        }
+        mData = initItemList();
     }
 
     private List<ItemBean> initItemList() {
         List<ItemBean> list = new ArrayList<>();
         list.add(new ItemBean("图片", IamgeActivity.class));
+        list.add(new ItemBean("添加图片", AddImgActivity.class));
         return list;
     }
 
     private class ItemBean {
         private String title;
-        private Class<? extends Activity> activity;
+        private Class<? extends Activity> aClass;
 
         public ItemBean(String title, Class<? extends Activity> activity) {
             this.title = title;
-            this.activity = activity;
+            this.aClass = activity;
+        }
+
+        @Override
+        public String toString() {
+            return title;
         }
     }
 }
