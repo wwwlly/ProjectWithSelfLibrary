@@ -43,4 +43,14 @@ public final class TimeUtils {
     private static DateFormat newDateFormat(String pattern) {
         return new SimpleDateFormat(pattern, Locale.CHINA);
     }
+
+    //昨天日期
+    public static Date getYestoday() {
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        c.set(Calendar.DAY_OF_MONTH, day - 1);
+        return c.getTime();
+    }
 }
