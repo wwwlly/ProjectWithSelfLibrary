@@ -4,10 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.kemp.kemplibrary.utils.CommonUtils
@@ -26,7 +27,7 @@ class IamgeActivity : AppCompatActivity() {
     }
 
     fun init() {
-        val btn = findViewById(R.id.btn)
+        val btn: Button = findViewById(R.id.btn)
 
         btn.setOnClickListener {
             CommonUtils.intentToAlbum(this, REQUEST_CODE_ALBUM)
@@ -39,7 +40,7 @@ class IamgeActivity : AppCompatActivity() {
                 return
             }
 
-            val tv: TextView = findViewById(R.id.tv) as TextView
+            val tv: TextView = findViewById(R.id.tv)
 
             val selectedImage = data.data
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
@@ -54,7 +55,7 @@ class IamgeActivity : AppCompatActivity() {
             if (!TextUtils.isEmpty(picturePath)) {
                 tv.text = picturePath
 
-                val iv: ImageView = findViewById(R.id.iv) as ImageView
+                val iv: ImageView = findViewById(R.id.iv)
                 val option: BitmapFactory.Options = BitmapFactory.Options()
                 option.inSampleSize = 2
                 val bitmap: Bitmap = BitmapFactory.decodeFile(picturePath, option)

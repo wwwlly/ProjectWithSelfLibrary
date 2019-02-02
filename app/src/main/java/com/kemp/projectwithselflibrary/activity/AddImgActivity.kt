@@ -1,14 +1,13 @@
 package com.kemp.projectwithselflibrary.activity
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.text.TextUtils
 import android.widget.GridView
 import android.widget.Toast
@@ -23,7 +22,7 @@ import java.io.IOException
 class AddImgActivity : AppCompatActivity() {
 
     private val REQUEST_CODE_ALBUM = 1
-    private val ADD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "add_images" + File.separator
+    private val ADD_PATH = Environment.getExternalStorageDirectory().absolutePath + File.separator + "add_images" + File.separator
 
     private val mData: MutableList<String> = ArrayList()
     private val adapter = GridPlusAdapter(this)
@@ -36,7 +35,7 @@ class AddImgActivity : AppCompatActivity() {
     }
 
     fun init() {
-        val gridView: GridView = findViewById(R.id.grid_view) as GridView
+        val gridView: GridView = findViewById(R.id.grid_view)
 
         adapter.setData(mData)
         adapter.setMaxLength(5)
@@ -57,11 +56,10 @@ class AddImgActivity : AppCompatActivity() {
 
     private fun deletePickture(position: Int): Unit {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("删除").setMessage("确定要删除该图片吗？").setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
-            removeData(position)
-        }).setNegativeButton("取消", DialogInterface.OnClickListener { dialog, which ->
-            dialog.cancel()
-        }).show()
+        builder.setTitle("删除").setMessage("确定要删除该图片吗？")
+                .setPositiveButton("确定", { _, which -> removeData(position) })
+                .setNegativeButton("取消", { dialog, _ -> dialog.cancel() })
+                .show()
     }
 
     fun addData(bitmapPath: String) {

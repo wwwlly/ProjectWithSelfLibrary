@@ -2,7 +2,7 @@ package com.kemp.projectwithselflibrary;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +19,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = "MainActivity";
     private List<ItemBean> mData = new ArrayList<>();
 
     @Override
@@ -27,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String deviceCode = ToolUtils.getUniqueCode(this);
-        Log.d("www", deviceCode);
+        Log.d(TAG, deviceCode == null ? "deviceCode is null" : "deviceCode is " + deviceCode);
 
         initData();
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        ListView listView = findViewById(R.id.list_view);
         ArrayAdapter<ItemBean> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mData);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -3,7 +3,7 @@ package com.kemp.kemplibrary.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.kemp.kemplibrary.utils.Logger;
